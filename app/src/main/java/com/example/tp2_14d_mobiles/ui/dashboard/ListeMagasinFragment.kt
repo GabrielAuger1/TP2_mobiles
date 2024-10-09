@@ -10,43 +10,55 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tp2_14d_mobiles.adapter.ItemAdapter
-import com.example.tp2_14d_mobiles.R
 import com.example.tp2_14d_mobiles.data.ItemDao
 import com.example.tp2_14d_mobiles.data.ItemDatabase
 import com.example.tp2_14d_mobiles.databinding.FragmentListeMagasinBinding
+import com.example.tp2_14d_mobiles.model.Item
+import kotlin.concurrent.thread
 
 class ListeMagasinFragment : Fragment() {
 
+    private var itemAdapter: ItemAdapter? = null
+    private var mItem: MutableList<Item> = ArrayList<Item>(0)
     private var _binding: FragmentListeMagasinBinding? = null
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var itemAdapter: ItemAdapter
-    private lateinit var itemDao: ItemDao
+    private val binding get() = _binding!!
+    private lateinit var liste: ListeMagasinViewModel
 
     // This property is only valid between onCreateView and
     // onDestroyView.
-    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(ListeMagasinViewModel::class.java)
+        liste =
+            ViewModelProvider(requireActivity()).get(ListeMagasinViewModel::class.java)
 
         _binding = FragmentListeMagasinBinding.inflate(inflater, container, false)
+
         val root: View = binding.root
-        recyclerView = root.findViewById(R.id.recycler_view)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
-        val itemDatabase = ItemDatabase.getInstance(requireContext())
-
-        itemDao = itemDatabase.itemDao()
-        itemDao.getAllItems().observe(viewLifecycleOwner, Observer { items ->
-            itemAdapter = ItemAdapter(items, isAdminMode = false)
-            recyclerView.adapter = itemAdapter
-        })
+//        recyclerView = root.findViewById(R.id.recycler_view)
+//        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+//
+//        val itemDatabase = ItemDatabase.getInstance(requireContext())
+//
+//        itemDao = itemDatabase.itemDao()
+//        itemDao.getAllItems().observe(viewLifecycleOwner, Observer { items ->
+//            itemAdapter = ItemAdapter(items, isAdminMode = false)
+//            recyclerView.adapter = itemAdapter
+//        })
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val recyclerView: RecyclerView = binding!!.recyclerView
+        val context = recyclerView.context
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        itemAdapter = ItemAdapter(mItem, isAdminMode = false)
+        recyclerView.adapter = itemAdapter
+
     }
 
     override fun onDestroyView() {
