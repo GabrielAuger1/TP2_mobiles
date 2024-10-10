@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,7 +18,7 @@ import kotlin.concurrent.thread
 class ListeMagasinFragment : Fragment() {
 
     private var itemAdapter: ItemAdapter? = null
-    private var mItem: MutableList<Item> = ArrayList<Item>(0)
+    private var mItems: MutableList<Item> = ArrayList<Item>(0)
     private var _binding: FragmentListeMagasinBinding? = null
     private val binding get() = _binding!!
     private lateinit var liste: ListeMagasinViewModel
@@ -38,16 +37,6 @@ class ListeMagasinFragment : Fragment() {
         _binding = FragmentListeMagasinBinding.inflate(inflater, container, false)
 
         val root: View = binding.root
-//        recyclerView = root.findViewById(R.id.recycler_view)
-//        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-//
-//        val itemDatabase = ItemDatabase.getInstance(requireContext())
-//
-//        itemDao = itemDatabase.itemDao()
-//        itemDao.getAllItems().observe(viewLifecycleOwner, Observer { items ->
-//            itemAdapter = ItemAdapter(items, isAdminMode = false)
-//            recyclerView.adapter = itemAdapter
-//        })
         return root
     }
 
@@ -56,13 +45,31 @@ class ListeMagasinFragment : Fragment() {
         val recyclerView: RecyclerView = binding!!.recyclerView
         val context = recyclerView.context
         recyclerView.layoutManager = LinearLayoutManager(context)
-        itemAdapter = ItemAdapter(mItem, isAdminMode = false)
+        recyclerView.setHasFixedSize(true)
+        itemAdapter = ItemAdapter(mItems, isAdminMode = false)
         recyclerView.adapter = itemAdapter
+        val itemDao: ItemDao = ItemDatabase.getDatabase(requireContext()).itemDao()
+        thread { itemDao?.deleteAllItems() }.join()
+        var item: Item? = Item(1, "Item 1", "Description 1", 10.0, "Categorie 1")
+        thread { itemDao?.insertItem(item!!) }.join()
+        item = Item(2, "Item 2", "Description 2", 20.0, "Categorie 2")
+        thread { itemDao?.insertItem(item!!) }.join()
+        item = Item(3, "Item 3", "Description 3", 30.0, "Categorie 3")
+        thread { itemDao?.insertItem(item!!) }.join()
+
+        thread {
+            mItems = itemDao?.getAllItems()!!
+        }.join()
+
+        itemAdapter?.setItems(mItems)
 
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+    fun cacherFab() {
+        binding.fab.visibility = View.GONE
     }
 }

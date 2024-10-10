@@ -14,7 +14,8 @@ interface OnItemClickListenerInterface {
 }
 
 class ItemAdapter(
-    private val itemList: List<Item>,
+
+    private var items: List<Item>,
     private val isAdminMode: Boolean
 ) : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
 
@@ -78,7 +79,12 @@ class ItemAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(itemList[position])
+        holder.bind(items[position])
     }
-    override fun getItemCount(): Int = itemList.size
+    override fun getItemCount(): Int = items.size
+
+    fun setItems(items: List<Item>) {
+        this.items = items
+        notifyDataSetChanged()
+    }
 }
