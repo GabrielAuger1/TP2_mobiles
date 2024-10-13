@@ -6,27 +6,12 @@
     android:layout_height="match_parent"
     android:paddingTop="?attr/actionBarSize">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:elevation="4dp"
-        android:theme="@style/Theme.Material3.Dark"
-        android:background="@color/black"
+    <include
+        android:id="@+id/toBar"
+        layout="@layout/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/tbar"
-            android:layout_width="122dp"
-            android:layout_height="55dp"
-            android:layout_marginStart="250dp"
-            android:layout_marginTop="1dp"
-            android:elevation="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
