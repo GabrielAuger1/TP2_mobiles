@@ -3,4 +3,11 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <!-- Strings used for fragments for menu -->
+    <string name="admin"> Admin </string>
+    <string name="menu"> Menu </string>
+    <string name="ajoute_admin"> Ajouter </string>
+    <string name="effacer_admin"> Effacer </string>
+    <string name="modifier_admin"> Modifier </string>
+
 </resources>

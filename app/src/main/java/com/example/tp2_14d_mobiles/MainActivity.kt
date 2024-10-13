@@ -1,15 +1,21 @@
 package com.example.tp2_14d_mobiles
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Switch
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.tp2_14d_mobiles.databinding.ActivityMainBinding
+import org.w3c.dom.Text
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var btnSwitch: SwitchCompat
 
     private lateinit var binding: ActivityMainBinding
 
@@ -18,6 +24,13 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //Déclaration du Toolbar
+        val toolbar = binding.toolbar
+        setSupportActionBar(toolbar)
+
+        // Déclaration du bouton switch
+        btnSwitch = binding.tbar
 
         val navView: BottomNavigationView = binding.navView
 
@@ -31,5 +44,25 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+
+        // Actions sur les items du bouton switch
+        btnSwitch.setOnCheckedChangeListener { _, isChecked ->
+
+            if(isChecked) {
+                setContentView(R.layout.activity_admin)
+
+
+
+            }else{
+
+                setContentView(R.layout.activity_main)
+            }
+        }
+
+
     }
+
+
+
 }
