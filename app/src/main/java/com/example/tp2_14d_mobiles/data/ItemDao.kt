@@ -29,4 +29,10 @@ interface ItemDao {
 
     @Query("DELETE FROM items")
     fun deleteAllItems()
+
+    companion object {
+        fun insertItem(item: Item) {
+
+        }
+    }
 }
