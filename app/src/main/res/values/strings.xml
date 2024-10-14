@@ -13,5 +13,8 @@
     <string name="nom_produit"></string>
     <string name="description"></string>
     <string name="prix"></string>
+    <string name="prix_prix">Prix : </string>
+    <string name="categorie_categorie">Categorie : </string>
+    <string name="categorie"> </string>
 
 </resources>
