@@ -1,6 +1,7 @@
 package com.example.tp2_14d_mobiles
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import com.example.tp2_14d_mobiles.data.ItemDao
 import com.example.tp2_14d_mobiles.data.ItemDatabase
@@ -19,6 +20,7 @@ import kotlin.concurrent.thread
 class MainActivity : AppCompatActivity() {
 
     private lateinit var btnSwitch: SwitchCompat
+
     private lateinit var itemDao: ItemDao
     private lateinit var binding: ActivityMainBinding
     private lateinit var list: MutableList<Item>
@@ -39,7 +41,9 @@ class MainActivity : AppCompatActivity() {
         // Déclaration du bouton switch
         btnSwitch = binding.toBar.tbar
 
-        val btnPlusAdmin = findViewById<Button>(R.id.btn_plus_admin)
+        val btnPlusAdmin = binding.fab
+        btnPlusAdmin.visibility = View.GONE
+
 
         val navView: BottomNavigationView = binding.navView
 
@@ -70,13 +74,13 @@ class MainActivity : AppCompatActivity() {
         btnSwitch.setOnCheckedChangeListener { _, isChecked ->
 
             if(isChecked) {
-                setContentView(R.layout.main_admin)
+                btnPlusAdmin.visibility = View.VISIBLE
 
 
 
             }else{
 
-                setContentView(binding.root)
+                btnPlusAdmin.visibility = View.GONE
             }
         }
 

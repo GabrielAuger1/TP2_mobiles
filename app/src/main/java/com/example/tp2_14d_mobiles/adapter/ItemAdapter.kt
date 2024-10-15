@@ -60,9 +60,10 @@ class ItemAdapter(
         }
 
         fun bind(item: Item) {
-            binding.itemName.text = item.nom
+            binding.itemNom.text = item.nom
             binding.itemDescription.text = item.description
-            binding.itemPrice.text = item.prix.toString()
+            binding.ItemCategorie.text = item.categorie
+            binding.itemPrix.text = item.prix.toString()
 
             //val imageResId = when (item.categorie) {
                 //"Fruit" -> R.drawable.fruit

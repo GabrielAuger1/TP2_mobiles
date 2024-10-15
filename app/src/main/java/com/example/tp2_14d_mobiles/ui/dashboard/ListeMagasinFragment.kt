@@ -69,7 +69,7 @@ class ListeMagasinFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-    fun cacherFab() {
-        binding.fab.visibility = View.GONE
-    }
+   // fun cacherFab() {
+    //    binding.fab.visibility = View.GONE
+   // }
 }
