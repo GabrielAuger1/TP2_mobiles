@@ -14,7 +14,6 @@ interface OnItemClickListenerInterface {
 }
 
 class ItemAdapter(
-
     private var items: List<Item>,
     private val isAdminMode: Boolean
 ) : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
@@ -28,14 +27,12 @@ class ItemAdapter(
     inner class ViewHolder(private val binding: ItemRowBinding) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            // Handle simple click events
             binding.root.setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     listener.onItemClick(itemView, adapterPosition)
                 }
             }
 
-            // Handle context menu creation (edit and delete)
             if (isAdminMode) {
                 binding.root.setOnCreateContextMenuListener { menu, v, menuInfo ->
                     val position = adapterPosition
@@ -63,13 +60,6 @@ class ItemAdapter(
             binding.itemName.text = item.nom
             binding.itemDescription.text = item.description
             binding.itemPrice.text = item.prix.toString()
-
-            //val imageResId = when (item.categorie) {
-                //"Fruit" -> R.drawable.fruit
-                //"Vegetable" -> R.drawable.vegetable
-                //else -> R.drawable.default_image
-            //}
-            //binding.itemImage.setImageResource(imageResId)
         }
     }
 
@@ -81,6 +71,7 @@ class ItemAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(items[position])
     }
+
     override fun getItemCount(): Int = items.size
 
     fun setItems(items: List<Item>) {
