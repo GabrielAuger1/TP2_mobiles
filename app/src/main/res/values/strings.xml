@@ -16,5 +16,6 @@
     <string name="prix_prix">Prix : </string>
     <string name="categorie_categorie">Categorie : </string>
     <string name="categorie"> </string>
+    <string name="qte"> Qte : </string>
 
 </resources>
