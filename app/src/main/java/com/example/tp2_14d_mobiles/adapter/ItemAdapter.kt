@@ -18,6 +18,10 @@ class ItemAdapter(
     private val isAdminMode: Boolean
 ) : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
 
+    private val itemQuantities: MutableMap<Int, Int> = mutableMapOf()
+
+    private val selectedItems: MutableSet<Int> = mutableSetOf()
+
     lateinit var listener: OnItemClickListenerInterface
 
     fun setOnItemClickListener(listener: OnItemClickListenerInterface) {
@@ -61,34 +65,46 @@ class ItemAdapter(
             binding.itemDescription.text = item.description
             binding.itemPrice.text = item.prix.toString()
 
-            var quantity = 1
+            val quantity = itemQuantities[item.id] ?: 1
             binding.tvQuantity.text = quantity.toString()
 
             updateDecrementButtonState(quantity)
 
             binding.btnIncrement.setOnClickListener {
-                quantity++
-                binding.tvQuantity.text = quantity.toString()
-                updateDecrementButtonState(quantity)  // Enable decrement button if quantity > 1
+                val newQuantity = (itemQuantities[item.id] ?: 1) + 1
+                itemQuantities[item.id] = newQuantity
+                binding.tvQuantity.text = newQuantity.toString()
+                updateDecrementButtonState(newQuantity)
             }
 
             binding.btnDecrement.setOnClickListener {
-                if (quantity > 1) {
-                    quantity--
-                    binding.tvQuantity.text = quantity.toString()
-                    updateDecrementButtonState(quantity)
+                val currentQuantity = itemQuantities[item.id] ?: 1
+                if (currentQuantity > 1) {
+                    val newQuantity = currentQuantity - 1
+                    itemQuantities[item.id] = newQuantity
+                    binding.tvQuantity.text = newQuantity.toString()
+                    updateDecrementButtonState(newQuantity)
+                }
+            }
+
+            binding.checkboxSelectItem.setOnCheckedChangeListener(null)
+
+            binding.checkboxSelectItem.isChecked = selectedItems.contains(item.id)
+
+            binding.checkboxSelectItem.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    selectedItems.add(item.id)
+                } else {
+                    selectedItems.remove(item.id)
                 }
             }
         }
 
         private fun updateDecrementButtonState(quantity: Int) {
-            // Disable the decrement button if the quantity is 1, otherwise enable it
             binding.btnDecrement.isEnabled = quantity > 1
         }
 
     }
-
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -104,5 +120,10 @@ class ItemAdapter(
     fun setItems(items: List<Item>) {
         this.items = items
         notifyDataSetChanged()
+    }
+
+    fun getSelectedItemsWithQuantities(): List<Pair<Item, Int>> {
+        return items.filter { selectedItems.contains(it.id) }
+            .map { item -> item to (itemQuantities[item.id] ?: 1) }
     }
 }
