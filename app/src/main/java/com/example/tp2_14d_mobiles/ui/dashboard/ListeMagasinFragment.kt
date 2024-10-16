@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,9 +24,6 @@ class ListeMagasinFragment : Fragment() {
     private var _binding: FragmentListeMagasinBinding? = null
     private val binding get() = _binding!!
     private lateinit var liste: ListeMagasinViewModel
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,8 +47,19 @@ class ListeMagasinFragment : Fragment() {
         recyclerView.setHasFixedSize(true)
         itemAdapter = ItemAdapter(mItems, isAdminMode = false)
         recyclerView.adapter = itemAdapter
+        itemAdapter!!.onSelectionChangeListener = {
+            binding.btnAddToCart.isEnabled = itemAdapter!!.getSelectedItemCount() > 0        }
+
+        binding.btnAddToCart.isEnabled = false
+
+        binding.btnAddToCart.setOnClickListener {
+            val selectedItemsWithQuantities = itemAdapter!!.getSelectedItemsWithQuantities()
+            addToCart(selectedItemsWithQuantities)
+        }
+
         val itemDao: ItemDao = ItemDatabase.getDatabase(requireContext()).itemDao()
         thread { itemDao?.deleteAllItems() }.join()
+        // Populer la base de données
         var item: Item? = Item(1, "Item 1", "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.", 10.0, "Categorie 1")
         thread { itemDao?.insertItem(item!!) }.join()
         item = Item(2, "Item 2", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", 20.0, "Categorie 2")
@@ -68,21 +77,10 @@ class ListeMagasinFragment : Fragment() {
             override fun onItemClick(itemView: View?, position: Int) {
                 val item = mItems[position]
                 liste.setItem(item)
-//                val fragment = DetailMagasinFragment()
-//                val transaction = requireActivity().supportFragmentManager.beginTransaction()
-//                transaction.replace(binding.root.id, fragment)
-//                transaction.addToBackStack(null)
-//                transaction.commit()
             }
 
             override fun onClickEdit(itemView: View, position: Int) {
                 val item = mItems[position]
-//                liste.setItem(item)
-//                val fragment = ModifierMagasinFragment()
-//                val transaction = requireActivity().supportFragmentManager.beginTransaction()
-//                transaction.replace(binding.root.id, fragment)
-//                transaction.addToBackStack(null)
-//                transaction.commit()
             }
 
             override fun onClickDelete(position: Int) {
@@ -93,8 +91,14 @@ class ListeMagasinFragment : Fragment() {
             }
         })
 
-    }
 
+    }
+    fun addToCart(selectedItems: List<Pair<Item, Int>>) {
+        for ((item, quantity) in selectedItems) {
+            println("Adding ${item.nom} with quantity $quantity to the cart.")
+        }
+        Toast.makeText(requireContext(), "${itemAdapter!!.getSelectedItemCount()} items ajoutés au panier!", Toast.LENGTH_SHORT).show()
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

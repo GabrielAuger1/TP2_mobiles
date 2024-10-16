@@ -18,8 +18,9 @@ class ItemAdapter(
     private val isAdminMode: Boolean
 ) : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
 
-    private val itemQuantities: MutableMap<Int, Int> = mutableMapOf()
+    var onSelectionChangeListener: (() -> Unit)? = null
 
+    private val itemQuantities: MutableMap<Int, Int> = mutableMapOf()
     private val selectedItems: MutableSet<Int> = mutableSetOf()
 
     lateinit var listener: OnItemClickListenerInterface
@@ -88,7 +89,6 @@ class ItemAdapter(
             }
 
             binding.checkboxSelectItem.setOnCheckedChangeListener(null)
-
             binding.checkboxSelectItem.isChecked = selectedItems.contains(item.id)
 
             binding.checkboxSelectItem.setOnCheckedChangeListener { _, isChecked ->
@@ -97,6 +97,7 @@ class ItemAdapter(
                 } else {
                     selectedItems.remove(item.id)
                 }
+                onSelectionChangeListener?.invoke()  // Notify when selection changes
             }
         }
 
@@ -121,7 +122,11 @@ class ItemAdapter(
         this.items = items
         notifyDataSetChanged()
     }
-
+    fun getSelectedItemCount(): Int {
+        return selectedItems.sumOf { itemId ->
+            itemQuantities[itemId] ?: 1
+        }
+    }
     fun getSelectedItemsWithQuantities(): List<Pair<Item, Int>> {
         return items.filter { selectedItems.contains(it.id) }
             .map { item -> item to (itemQuantities[item.id] ?: 1) }
