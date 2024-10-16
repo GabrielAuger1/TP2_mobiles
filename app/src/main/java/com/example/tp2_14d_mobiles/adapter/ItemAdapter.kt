@@ -60,8 +60,35 @@ class ItemAdapter(
             binding.itemName.text = item.nom
             binding.itemDescription.text = item.description
             binding.itemPrice.text = item.prix.toString()
+
+            var quantity = 1
+            binding.tvQuantity.text = quantity.toString()
+
+            updateDecrementButtonState(quantity)
+
+            binding.btnIncrement.setOnClickListener {
+                quantity++
+                binding.tvQuantity.text = quantity.toString()
+                updateDecrementButtonState(quantity)  // Enable decrement button if quantity > 1
+            }
+
+            binding.btnDecrement.setOnClickListener {
+                if (quantity > 1) {
+                    quantity--
+                    binding.tvQuantity.text = quantity.toString()
+                    updateDecrementButtonState(quantity)
+                }
+            }
         }
+
+        private fun updateDecrementButtonState(quantity: Int) {
+            // Disable the decrement button if the quantity is 1, otherwise enable it
+            binding.btnDecrement.isEnabled = quantity > 1
+        }
+
     }
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
