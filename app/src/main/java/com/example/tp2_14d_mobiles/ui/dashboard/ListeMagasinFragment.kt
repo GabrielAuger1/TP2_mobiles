@@ -55,6 +55,7 @@ class ListeMagasinFragment : Fragment() {
         binding.btnAddToCart.setOnClickListener {
             val selectedItemsWithQuantities = itemAdapter!!.getSelectedItemsWithQuantities()
             addToCart(selectedItemsWithQuantities)
+
         }
 
         val itemDao: ItemDao = ItemDatabase.getDatabase(requireContext()).itemDao()
