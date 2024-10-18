@@ -33,6 +33,6 @@ androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx"
 androidx-navigation-safe-args-generator = { group = "androidx.navigation", name = "navigation-safe-args-generator", version.ref = "navigationSafeArgsGenerator" }
 
 [plugins]
-android-application = { id = "com.android.application", version = "8.5.2" }
+android-application = { id = "com.android.application", version = "8.7.0" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ksp-android = { id = "com.google.devtools.ksp", version.ref = "ksp" }
