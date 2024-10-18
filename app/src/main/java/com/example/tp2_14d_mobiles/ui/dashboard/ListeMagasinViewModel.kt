@@ -9,6 +9,9 @@ class ListeMagasinViewModel : ViewModel() {
 
     private val mItem = MutableLiveData<Item>()
 
+    var selectedItems: List<Item> = emptyList()
+    var quantities: List<Int> = emptyList()
+
     var item: LiveData<Item>
         get() = mItem
         set(item) {

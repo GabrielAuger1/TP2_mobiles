@@ -78,9 +78,12 @@ class MainActivity : AppCompatActivity() {
 
             // Ajout d'un produit en BD quand on clique sur le bouton
 
+            itemAdapter?.setItems(list)
+
             thread {
                 item.insertItem(Item(0,"Produit", "Present surprise", 15.2, "cadeau"))
             }.join()
+            itemAdapter?.notifyItemInserted (list.size-1)
         }
 
         // Actions sur les items du bouton switch

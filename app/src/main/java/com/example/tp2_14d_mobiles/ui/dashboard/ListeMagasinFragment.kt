@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,7 @@ import com.example.tp2_14d_mobiles.data.ItemDao
 import com.example.tp2_14d_mobiles.data.ItemDatabase
 import com.example.tp2_14d_mobiles.databinding.FragmentListeMagasinBinding
 import com.example.tp2_14d_mobiles.model.Item
+import com.example.tp2_14d_mobiles.ui.home.HomeViewModel
 import kotlin.concurrent.thread
 
 class ListeMagasinFragment : Fragment() {
@@ -26,6 +28,7 @@ class ListeMagasinFragment : Fragment() {
     private val binding get() = _binding!!
     private var isAdminMode: Boolean = false
     private lateinit var liste: ListeMagasinViewModel
+    private lateinit var listeViewModel: ListeMagasinViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +39,8 @@ class ListeMagasinFragment : Fragment() {
             ViewModelProvider(requireActivity()).get(ListeMagasinViewModel::class.java)
 
         _binding = FragmentListeMagasinBinding.inflate(inflater, container, false)
+
+        listeViewModel = ViewModelProvider(requireActivity()).get(ListeMagasinViewModel::class.java)
 
         val root: View = binding.root
         return root
@@ -58,6 +63,9 @@ class ListeMagasinFragment : Fragment() {
         binding.btnAddToCart.setOnClickListener {
             val selectedItemsWithQuantities = itemAdapter!!.getSelectedItemsWithQuantities()
             addToCart(selectedItemsWithQuantities)
+
+            listeViewModel.selectedItems = selectedItemsWithQuantities.map { it.first }
+            listeViewModel.quantities = selectedItemsWithQuantities.map { it.second }
 
         }
 
@@ -98,11 +106,16 @@ class ListeMagasinFragment : Fragment() {
 
     }
     fun addToCart(selectedItems: List<Pair<Item, Int>>) {
+
         for ((item, quantity) in selectedItems) {
             println("Adding ${item.nom} with quantity $quantity to the cart.")
         }
         Toast.makeText(requireContext(), "${itemAdapter!!.getSelectedItemCount()} items ajoutés au panier!", Toast.LENGTH_SHORT).show()
+
+
     }
+
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
