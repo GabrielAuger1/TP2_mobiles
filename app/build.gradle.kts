@@ -42,6 +42,7 @@ android {
 dependencies {
 
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.navigation.safe.args.generator)
     ksp(libs.androidx.room.compiler)
 
     implementation(libs.androidx.appcompat)

@@ -25,6 +25,8 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private lateinit var listeViewModel: ListeMagasinViewModel
+    val listeCompte: MutableList<Triple<Item, Int, Double>> = mutableListOf()
+
 
 
     // This property is only valid between onCreateView and
@@ -69,8 +71,9 @@ class HomeFragment : Fragment() {
                 val nom = item.nom
                 val prix =item.prix
                 val prixQte = prix*qte
+                val it = Triple(item, qte, prixQte)
 
-
+                listeCompte.add(it)
             }
         }
 
@@ -87,6 +90,7 @@ class HomeFragment : Fragment() {
         val context = recyclerView.context
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
+
 
 
     }
