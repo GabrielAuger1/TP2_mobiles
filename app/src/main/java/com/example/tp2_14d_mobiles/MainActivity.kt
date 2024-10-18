@@ -2,13 +2,17 @@ package com.example.tp2_14d_mobiles
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
+import androidx.lifecycle.ReportFragment.Companion.reportFragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.RecyclerView
+import com.example.tp2_14d_mobiles.adapter.ItemAdapter
 import com.example.tp2_14d_mobiles.data.ItemDao
 import com.example.tp2_14d_mobiles.data.ItemDatabase
 import com.example.tp2_14d_mobiles.databinding.ActivityMainBinding
@@ -22,7 +26,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var item: ItemDao
     private lateinit var binding: ActivityMainBinding
     private lateinit var list: MutableList<Item>
-    private var isAdminMode: Boolean = false
+    private lateinit var itemAdapter: ItemAdapter
+    var isAdminMode: Boolean = false
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +42,10 @@ class MainActivity : AppCompatActivity() {
 
         val txAdm = binding.adm
         txAdm.visibility = View.GONE
+
+
+        itemAdapter = ItemAdapter(listOf(), false)
+
 
         //Déclaration du Toolbar
         val toolbar = binding.toBar.toolbar
@@ -73,12 +85,16 @@ class MainActivity : AppCompatActivity() {
 
         // Actions sur les items du bouton switch
         btnSwitch.setOnCheckedChangeListener { _, isChecked ->
-
+            isAdminMode = isChecked
             if(isChecked) {
 
                 btnPlusAdmin.visibility = View.VISIBLE
                 txAdm.visibility = View.VISIBLE
+
+                itemAdapter.setAdminMode(isAdminMode)
                 isAdminMode=true
+
+
 
 
             }else{

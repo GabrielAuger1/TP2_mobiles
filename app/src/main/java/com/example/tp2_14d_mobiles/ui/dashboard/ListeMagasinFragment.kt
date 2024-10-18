@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.tp2_14d_mobiles.MainActivity
 import com.example.tp2_14d_mobiles.adapter.ItemAdapter
 import com.example.tp2_14d_mobiles.adapter.OnItemClickListenerInterface
 import com.example.tp2_14d_mobiles.data.ItemDao
@@ -23,6 +24,7 @@ class ListeMagasinFragment : Fragment() {
     private var mItems: MutableList<Item> = ArrayList<Item>(0)
     private var _binding: FragmentListeMagasinBinding? = null
     private val binding get() = _binding!!
+    private var isAdminMode: Boolean = false
     private lateinit var liste: ListeMagasinViewModel
 
     override fun onCreateView(
@@ -43,9 +45,10 @@ class ListeMagasinFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView: RecyclerView = binding!!.recyclerView
         val context = recyclerView.context
+        isAdminMode = (activity as MainActivity).isAdminMode
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
-        itemAdapter = ItemAdapter(mItems, isAdminMode = false)
+        itemAdapter = ItemAdapter(mItems, isAdminMode )
         recyclerView.adapter = itemAdapter
         itemAdapter!!.onSelectionChangeListener = {
             binding.btnAddToCart.isEnabled = itemAdapter!!.getSelectedItemCount() > 0        }

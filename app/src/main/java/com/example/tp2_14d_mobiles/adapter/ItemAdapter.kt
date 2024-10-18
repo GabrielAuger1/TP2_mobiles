@@ -13,9 +13,10 @@ interface OnItemClickListenerInterface {
     fun onClickDelete(position: Int)
 }
 
+
 class ItemAdapter(
     private var items: List<Item>,
-    private val isAdminMode: Boolean
+    private var isAdminMode: Boolean
 ) : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
 
     var onSelectionChangeListener: (() -> Unit)? = null
@@ -131,4 +132,11 @@ class ItemAdapter(
         return items.filter { selectedItems.contains(it.id) }
             .map { item -> item to (itemQuantities[item.id] ?: 1) }
     }
+    //Définit le mode Administrateur à l’aide du bouton switch
+
+    fun setAdminMode(isAdminMode: Boolean) {
+        this.isAdminMode = isAdminMode
+        notifyDataSetChanged()
+    }
+
 }
