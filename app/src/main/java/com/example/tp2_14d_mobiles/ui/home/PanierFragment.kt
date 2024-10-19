@@ -9,13 +9,13 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.tp2_14d_mobiles.R
-import com.example.tp2_14d_mobiles.databinding.FragmentHomeBinding
+import com.example.tp2_14d_mobiles.databinding.FragmentPanierBinding
 import com.example.tp2_14d_mobiles.model.Item
 import com.example.tp2_14d_mobiles.ui.liste_magasin.ListeMagasinViewModel
 
-class HomeFragment : Fragment() {
+class PanierFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentPanierBinding? = null
     private lateinit var listeViewModel: ListeMagasinViewModel
     val listeCompte: MutableList<Triple<Item, Int, Double>> = mutableListOf()
     var tvq: Double = 0.0
@@ -41,7 +41,7 @@ class HomeFragment : Fragment() {
 
         initializeCart()
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentPanierBinding.inflate(inflater, container, false)
         return binding.root
     }
 

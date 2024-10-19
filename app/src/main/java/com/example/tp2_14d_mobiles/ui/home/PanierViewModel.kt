@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.tp2_14d_mobiles.model.Item
 
-class HomeViewModel : ViewModel() {
+class PanierViewModel : ViewModel() {
 
     var selectedItems: List<Item> = emptyList()
     var quantities: List<Int> = emptyList()

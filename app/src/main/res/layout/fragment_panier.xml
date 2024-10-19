@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="70dp"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".ui.home.PanierFragment">
 
     <ScrollView
         android:layout_width="match_parent"
