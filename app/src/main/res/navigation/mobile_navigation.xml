@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.tp2_14d_mobiles.ui.dashboard.ListeMagasinFragment"
+        android:name="com.example.tp2_14d_mobiles.ui.liste_magasin.ListeMagasinFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_liste_magasin" />
 

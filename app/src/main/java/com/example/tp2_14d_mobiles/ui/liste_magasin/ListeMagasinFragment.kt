@@ -1,4 +1,4 @@
-package com.example.tp2_14d_mobiles.ui.dashboard
+package com.example.tp2_14d_mobiles.ui.liste_magasin
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,7 +16,6 @@ import com.example.tp2_14d_mobiles.data.ItemDao
 import com.example.tp2_14d_mobiles.data.ItemDatabase
 import com.example.tp2_14d_mobiles.databinding.FragmentListeMagasinBinding
 import com.example.tp2_14d_mobiles.model.Item
-import com.example.tp2_14d_mobiles.ui.home.HomeViewModel
 import kotlin.concurrent.thread
 
 class ListeMagasinFragment : Fragment() {
