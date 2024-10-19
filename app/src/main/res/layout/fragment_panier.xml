@@ -45,6 +45,7 @@
         android:orientation="vertical"
         android:paddingLeft="3dp"
         android:paddingRight="3dp"
+        android:background="@color/cardview_dark_background"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="16dp">
