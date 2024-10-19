@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="70dp"
-    tools:context=".ui.home.PanierFragment">
+    tools:context=".ui.panier.PanierFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -33,9 +33,7 @@
                 android:textAlignment="center"
                 android:textSize="20sp" />
 
-
         </LinearLayout>
-
 
     </ScrollView>
 

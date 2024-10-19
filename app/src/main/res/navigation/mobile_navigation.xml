@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_panier"
-        android:name="com.example.tp2_14d_mobiles.ui.home.PanierFragment"
+        android:name="com.example.tp2_14d_mobiles.ui.panier.PanierFragment"
         android:label="@string/title_panier"
         tools:layout="@layout/fragment_panier" />
 

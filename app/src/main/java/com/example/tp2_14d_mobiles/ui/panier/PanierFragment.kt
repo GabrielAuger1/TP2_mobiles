@@ -1,4 +1,4 @@
-package com.example.tp2_14d_mobiles.ui.home
+package com.example.tp2_14d_mobiles.ui.panier
 
 import android.os.Bundle
 import android.view.LayoutInflater
