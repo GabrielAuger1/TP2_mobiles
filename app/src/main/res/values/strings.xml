@@ -5,6 +5,11 @@
     <string name="title_notifications">Notifications</string>
     <string name="ajouter_les_articles_au_panier">Ajouter les articles au panier</string>
     <string name="adm" > Admin</string>
-    <string name="total" > Total : </string>
-
+    <string name="total" > TOTAL : </string>
+    <string name="item" > Produit : </string>
+    <string name="qte" > Qte : </string>
+    <string name="sub_total" > Sous-total : </string>
+    <string name="tvq" > TVQ : </string>
+    <string name="tps" > TPS : </string>
+    <string name="tax">$$$</string>
 </resources>

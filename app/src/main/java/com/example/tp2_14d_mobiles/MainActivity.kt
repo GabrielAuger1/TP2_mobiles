@@ -94,17 +94,21 @@ class MainActivity : AppCompatActivity() {
                 btnPlusAdmin.visibility = View.VISIBLE
                 txAdm.visibility = View.VISIBLE
 
+                var btnAddToCart = findViewById<Button>(R.id.btn_add_to_cart)
+                btnAddToCart.isEnabled = false
                 itemAdapter.setAdminMode(isAdminMode)
-                isAdminMode=true
+                //isAdminMode=true
 
 
 
 
             }else{
-
+                var btnAddToCart = findViewById<Button>(R.id.btn_add_to_cart)
+                btnAddToCart.isEnabled
                 btnPlusAdmin.visibility = View.GONE
                 txAdm.visibility = View.GONE
-                isAdminMode=false
+                itemAdapter.setAdminMode(isAdminMode = false)
+                //isAdminMode=false
             }
         }
 
