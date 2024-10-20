@@ -102,8 +102,7 @@ class MainActivity : AppCompatActivity() {
                 .create()
 
             dialog.show()
-        }}
-
+        }
 
         // Switch logic
         btnSwitch.setOnCheckedChangeListener { _, isChecked ->
