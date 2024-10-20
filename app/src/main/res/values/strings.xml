@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">TP2_14D_mobiles</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_panier">Panier</string>
+    <string name="title_magasin">Magasin</string>
     <string name="title_notifications">Notifications</string>
     <string name="ajouter_les_articles_au_panier">Ajouter les articles au panier</string>
     <string name="adm" > Admin</string>
@@ -12,4 +12,7 @@
     <string name="tvq" > TVQ : </string>
     <string name="tps" > TPS : </string>
     <string name="tax">$$$</string>
+    <string name="nom_du_nouvel_item">Nom du nouvel item</string>
+    <string name="description">Description</string>
+    <string name="prix">Prix</string>
 </resources>

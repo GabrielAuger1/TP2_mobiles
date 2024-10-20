@@ -1,23 +1,24 @@
-package com.example.tp2_14d_mobiles.ui.dashboard
+package com.example.tp2_14d_mobiles.ui.liste_magasin
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tp2_14d_mobiles.MainActivity
+import com.example.tp2_14d_mobiles.R
 import com.example.tp2_14d_mobiles.adapter.ItemAdapter
 import com.example.tp2_14d_mobiles.adapter.OnItemClickListenerInterface
 import com.example.tp2_14d_mobiles.data.ItemDao
 import com.example.tp2_14d_mobiles.data.ItemDatabase
 import com.example.tp2_14d_mobiles.databinding.FragmentListeMagasinBinding
 import com.example.tp2_14d_mobiles.model.Item
-import com.example.tp2_14d_mobiles.ui.home.HomeViewModel
 import kotlin.concurrent.thread
 
 class ListeMagasinFragment : Fragment() {
@@ -93,16 +94,59 @@ class ListeMagasinFragment : Fragment() {
 
             override fun onClickEdit(itemView: View, position: Int) {
                 val item = mItems[position]
+                // Logique pour modifier l'élément
+                showEditItemDialog(item)
             }
 
+            private fun showEditItemDialog(item: Item) {
+                val dialogView = LayoutInflater.from(context!!).inflate(R.layout.dialog_add_item, null)
+                val itemNameInput = dialogView.findViewById<EditText>(R.id.edit_item_name)
+                val itemDescriptionInput = dialogView.findViewById<EditText>(R.id.edit_item_description)
+                val itemPriceInput = dialogView.findViewById<EditText>(R.id.edit_item_price)
+                AlertDialog.Builder(context)
+                    .setTitle("Ajouter un nouvel élément")
+                    .setView(dialogView)
+                    .setPositiveButton("Ajouter") { _, _ ->
+                        val itemName = itemNameInput.text.toString()
+                        val itemDescription = itemDescriptionInput.text.toString()
+                        val itemPrice = itemPriceInput.text.toString().toDoubleOrNull()
+
+                        if (itemName.isNotEmpty() && itemDescription.isNotEmpty() && itemPrice != null) {
+                            thread {
+                                itemDao.insertItem(Item(0, itemName, itemDescription, itemPrice, "Catégorie"))
+                                requireActivity().runOnUiThread() {
+                                    refreshItemList()
+                                }
+                            }
+                        }
+                    }
+                    .setNegativeButton("Annuler", null)
+                    .create()
+                    .show()
+            }
+
+            fun refreshItemList() {
+                thread {
+                    val items = itemDao.getAllItems()
+                    thread {
+                        requireActivity().runOnUiThread() {
+                            itemAdapter!!.setItems(items)
+                            itemAdapter!!.notifyDataSetChanged()
+                        }
+                    }
+                }
+            }
             override fun onClickDelete(position: Int) {
                 val item = mItems[position]
-                thread { itemDao?.deleteItem(item) }.join()
-                mItems.removeAt(position)
-                itemAdapter?.notifyItemRemoved(position)
+                thread {
+                    itemDao.deleteItem(item)
+                    requireActivity().runOnUiThread {
+                        mItems.removeAt(position)
+                        itemAdapter!!.notifyItemRemoved(position)
+                    }
+                }
             }
         })
-
 
     }
     fun addToCart(selectedItems: List<Pair<Item, Int>>) {
@@ -114,13 +158,20 @@ class ListeMagasinFragment : Fragment() {
 
 
     }
+    override fun onResume() {
+        super.onResume()
 
+        // Safely cast activity to MainActivity
+        val mainActivity = requireActivity() as? MainActivity
+        if (mainActivity?.isAdminMode == true) {
+            mainActivity.showFab()
+        } else {
+            mainActivity?.hideFab()
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-//    fun cacherFab() {
-//        binding.fab.visibility = View.GONE
-//    }
 }

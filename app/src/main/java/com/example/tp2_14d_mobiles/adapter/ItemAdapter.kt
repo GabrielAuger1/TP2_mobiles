@@ -42,8 +42,8 @@ class ItemAdapter(
             if (isAdminMode) {
                 binding.root.setOnCreateContextMenuListener { menu, v, menuInfo ->
                     val position = adapterPosition
-                    val edit: android.view.MenuItem = menu.add(0, v.id, 0, "Edit")
-                    val delete: android.view.MenuItem = menu.add(0, v.id, 0, "Delete")
+                    val edit: android.view.MenuItem = menu.add(0, v.id, 0, "Modifier")
+                    val delete: android.view.MenuItem = menu.add(0, v.id, 0, "Supprimer")
 
                     edit.setOnMenuItemClickListener {
                         if (position != RecyclerView.NO_POSITION) {

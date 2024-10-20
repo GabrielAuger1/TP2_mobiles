@@ -1,4 +1,4 @@
-package com.example.tp2_14d_mobiles.ui.dashboard
+package com.example.tp2_14d_mobiles.ui.liste_magasin
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
