@@ -72,7 +72,6 @@ class ListeMagasinFragment : Fragment() {
 
         val itemDao: ItemDao = ItemDatabase.getDatabase(requireContext()).itemDao()
         thread { itemDao?.deleteAllItems() }.join()
-        // Populer la base de données
         var item: Item? = Item(1, "Item 1", "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.", 10.0, "Categorie 1")
         thread { itemDao?.insertItem(item!!) }.join()
         item = Item(2, "Item 2", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", 20.0, "Categorie 2")
@@ -94,7 +93,6 @@ class ListeMagasinFragment : Fragment() {
 
             override fun onClickEdit(itemView: View, position: Int) {
                 val item = mItems[position]
-                // Logique pour modifier l'élément
                 showEditItemDialog(item)
             }
 
@@ -161,7 +159,6 @@ class ListeMagasinFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        // Safely cast activity to MainActivity
         val mainActivity = requireActivity() as? MainActivity
         if (mainActivity?.isAdminMode == true) {
             mainActivity.showFab()

@@ -39,21 +39,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Initialize DAO and list
         item = ItemDatabase.getDatabase(this).itemDao()
-        list = mutableListOf()  // Make sure the list is initialized
+        list = mutableListOf()
 
-        itemAdapter = ItemAdapter(list, false)  // Initialize the adapter with the list
+        itemAdapter = ItemAdapter(list, false)
 
-        // Set the adapter to your list
-        // Your recycler view setup here...
-
-        // Toolbar and Switch setup
         val toolbar = binding.toBar.toolbar
         setSupportActionBar(toolbar)
         btnSwitch = binding.toBar.tbar
 
-        // FAB Setup
         val btnPlusAdmin = binding.fab
         btnPlusAdmin.visibility = View.GONE
 
@@ -68,32 +62,26 @@ class MainActivity : AppCompatActivity() {
         btnPlusAdmin.setOnClickListener { view ->
             val dialogView = layoutInflater.inflate(R.layout.dialog_add_item, null)
 
-            // Create an AlertDialog for adding a new item
-            val dialog = AlertDialog.Builder(this)  // Use 'this' in an Activity
+            val dialog = AlertDialog.Builder(this)
                 .setTitle("Ajouter un produit")
                 .setView(dialogView)
                 .setPositiveButton("Ajouter") { _, _ ->
-                    // Get user inputs from the dialog
                     val itemName = dialogView.findViewById<EditText>(R.id.edit_item_name).text.toString()
                     val itemDescription = dialogView.findViewById<EditText>(R.id.edit_item_description).text.toString()
                     val itemPrice = dialogView.findViewById<EditText>(R.id.edit_item_price).text.toString().toDoubleOrNull() ?: 0.0
 
-                    // Ensure fields are not empty
                     if (itemName.isNotEmpty() && itemDescription.isNotEmpty()) {
-                        // Insert new item into the database in a background thread
                         thread {
-                            val newItem = Item(0, itemName, itemDescription, itemPrice, "Default Category")
-                            val newItemId = item.insertItemReturnId(newItem)  // Insert the item and get its ID
+                            val newItem = Item(0, itemName, itemDescription, itemPrice, "autre")
+                            val newItemId = item.insertItemReturnId(newItem)
 
-                            // Update the list and adapter on the UI thread
                             runOnUiThread {
-                                val newItemWithId = newItem.copy(id = newItemId.toInt())  // Copy item with the new ID
-                                list.add(newItemWithId)  // Add the new item to the list
-                                itemAdapter.notifyItemInserted(list.size - 1)  // Notify the adapter that a new item was inserted
+                                val newItemWithId = newItem.copy(id = newItemId.toInt())
+                                list.add(newItemWithId)
+                                itemAdapter.notifyItemInserted(list.size - 1)
                             }
                         }
                     } else {
-                        // Optionally show a message if fields are empty
                         Snackbar.make(view, "Les champs ne peuvent pas être vides.", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show()
                     }
@@ -104,7 +92,6 @@ class MainActivity : AppCompatActivity() {
             dialog.show()
         }
 
-        // Switch logic
         btnSwitch.setOnCheckedChangeListener { _, isChecked ->
             isAdminMode = isChecked
             val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
@@ -122,7 +109,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Show and Hide FAB
     fun showFab() {
         binding.fab.visibility = View.VISIBLE
     }
