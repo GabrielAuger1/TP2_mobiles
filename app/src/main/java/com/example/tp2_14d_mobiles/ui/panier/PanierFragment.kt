@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.tp2_14d_mobiles.MainActivity
 import com.example.tp2_14d_mobiles.R
 import com.example.tp2_14d_mobiles.databinding.FragmentPanierBinding
 import com.example.tp2_14d_mobiles.model.Item
@@ -102,5 +103,11 @@ class PanierFragment : Fragment() {
         } else {
             binding.totalPanier.visibility = View.GONE
         }
+    }
+    override fun onResume() {
+        super.onResume()
+
+        val mainActivity = activity as? MainActivity
+        mainActivity?.hideFab()
     }
 }

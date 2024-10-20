@@ -12,4 +12,7 @@
     <string name="tvq" > TVQ : </string>
     <string name="tps" > TPS : </string>
     <string name="tax">$$$</string>
+    <string name="nom_du_nouvel_item">Nom du nouvel item</string>
+    <string name="description">Description</string>
+    <string name="prix">Prix</string>
 </resources>
