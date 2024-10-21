@@ -1,15 +1,12 @@
 package com.example.tp2_14d_mobiles
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
