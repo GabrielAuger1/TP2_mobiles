@@ -104,6 +104,7 @@ class MainActivity : AppCompatActivity() {
         // Lorsque le commutateur est modifié, 'isAdmin
         btnSwitch.setOnCheckedChangeListener { _, isChecked ->
             isAdminMode = isChecked
+
             val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
             val currentFragment = navHostFragment.childFragmentManager.primaryNavigationFragment
 

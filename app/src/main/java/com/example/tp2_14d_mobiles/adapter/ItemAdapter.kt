@@ -42,6 +42,7 @@ class ItemAdapter(
             }
 
             if (isAdminMode) {
+                // Créer un menu contextuel lorsque l'utilisateur appuie longuement sur une ligne, pour modifier ou supprimer l'élément.
                 binding.root.setOnCreateContextMenuListener { menu, v, menuInfo ->
                     val position = adapterPosition
                     val edit: android.view.MenuItem = menu.add(0, v.id, 0, "Modifier")
@@ -146,9 +147,10 @@ class ItemAdapter(
     }
 
     //Définit le mode Administrateur à l’aide du bouton switch
-    fun setAdminMode(isAdminMode: Boolean) {
-        this.isAdminMode = isAdminMode
+    fun setAdminMode(isAdmin: Boolean) {
+        this.isAdminMode = isAdmin
         notifyDataSetChanged()
     }
+
 
 }

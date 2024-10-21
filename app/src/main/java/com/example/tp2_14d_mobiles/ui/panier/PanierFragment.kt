@@ -30,8 +30,8 @@ class PanierFragment : Fragment() {
     private var itensSelectiones: List<Item>? = null
     private var quantite: List<Int>? = null
 
-    //Function pour créer et afficher  le layout du fragment
-    // lorsqu'il est affiché dans l'interface utilisateur.
+    //Fonction pour créer et afficher  le layout du fragment
+    //lorsqu'il est affiché dans l'interface utilisateur.
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -112,8 +112,8 @@ class PanierFragment : Fragment() {
         }
     }
 
-    // Méthode appelée lorsque le Fragment revient à l'état actif et visible par l'utilisateur.
-    //Cela permet de contrôler la visibilité du FAB en fonction de l'état du Fragment.
+    //Méthode appelée lorsque le Fragment revient à l'état actif et visible par l'utilisateur.
+    //Cela permet de contrôler la visibilité du FAB (floating action button) en fonction de l'état du Fragment.
     override fun onResume() {
         super.onResume()
 

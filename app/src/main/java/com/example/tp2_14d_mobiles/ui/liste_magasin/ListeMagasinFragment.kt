@@ -167,21 +167,27 @@ class ListeMagasinFragment : Fragment() {
     }
 
     //Fonction appelée lorsque le fragment revient au premier plan,
-    // vérifie si l'activité principale est en mode admin (isAdminMode).
+    //vérifie si l'activité principale est en mode admin (isAdminMode).
 
     override fun onResume() {
         super.onResume()
 
-        val mainActivity = requireActivity() as? MainActivity
-        if (mainActivity?.isAdminMode == true) {
-            mainActivity.showFab()
+        // Accéder à l'état du mode administrateur depuis MainActivity
+        val isAdminMode = (activity as? MainActivity)?.isAdminMode ?: false
+        if (isAdminMode) {
+            // Afficher le FAB et configurer le menu contextuel pour le mode admin
+            (activity as MainActivity).showFab()
+            itemAdapter?.setAdminMode(true)
         } else {
-            mainActivity?.hideFab()
+            // Masquer le FAB et désactiver les fonctionnalités spécifiques à l'admin
+            (activity as MainActivity).hideFab()
+            itemAdapter?.setAdminMode(false)
         }
     }
 
+
     //Fonction appelée lorsque la vue du fragment est détruite
-    // pour assurer que la référence à _binding est définie sur null
+    //pour assurer que la référence à _binding est définie sur null
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
