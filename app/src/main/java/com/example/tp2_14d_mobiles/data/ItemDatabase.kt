@@ -10,6 +10,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+// Classe abstraite qui représente la bd pour l'entité Item.
+// Contient la définition de la table et donne accès au DAO.
 @Database(entities = [Item::class], version = 1)
 abstract class ItemDatabase : RoomDatabase() {
     abstract fun itemDao(): ItemDao

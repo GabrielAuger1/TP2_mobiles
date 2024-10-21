@@ -16,6 +16,7 @@ import com.example.tp2_14d_mobiles.ui.liste_magasin.ListeMagasinViewModel
 
 class PanierFragment : Fragment() {
 
+    //Déclaration des variables
     private var _binding: FragmentPanierBinding? = null
     private lateinit var listeViewModel: ListeMagasinViewModel
     val listeCompte: MutableList<Triple<Item, Int, Double>> = mutableListOf()
@@ -29,6 +30,8 @@ class PanierFragment : Fragment() {
     private var itensSelectiones: List<Item>? = null
     private var quantite: List<Int>? = null
 
+    //Function pour créer et afficher  le layout du fragment
+    // lorsqu'il est affiché dans l'interface utilisateur.
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -68,16 +71,20 @@ class PanierFragment : Fragment() {
         total = tps + tvq + some
     }
 
+    // Fonction appelée juste après la création du fragment Panier.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         updateCartUI()
     }
 
+    //Fonction appelée lorsque la vue du fragment est détruite
+    // pour assurer que la référence à _binding est définie sur null
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
+    // Initialise des composants et configure des comportements d'interface.
     private fun updateCartUI() {
         val linearLayout: LinearLayout = binding.itemCompte
         linearLayout.removeAllViews()
@@ -104,6 +111,9 @@ class PanierFragment : Fragment() {
             binding.totalPanier.visibility = View.GONE
         }
     }
+
+    // Méthode appelée lorsque le Fragment revient à l'état actif et visible par l'utilisateur.
+    //Cela permet de contrôler la visibilité du FAB en fonction de l'état du Fragment.
     override fun onResume() {
         super.onResume()
 

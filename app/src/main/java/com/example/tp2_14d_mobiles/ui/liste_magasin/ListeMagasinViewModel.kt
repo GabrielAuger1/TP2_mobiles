@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.tp2_14d_mobiles.model.Item
 
+//Gestion et du stockage des données liées aux éléments sélectionnés et à leurs quantités.
+
 class ListeMagasinViewModel : ViewModel() {
 
     private val mItem = MutableLiveData<Item>()

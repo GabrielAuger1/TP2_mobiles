@@ -4,6 +4,9 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+
+// Définition d'une entité de la base de données qui représente la table "items".
+
 @Entity(tableName = "items")
 data class Item(
     @PrimaryKey(autoGenerate = true)

@@ -26,12 +26,17 @@ import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
+    //Déclaration des variables
+
     private lateinit var btnSwitch: SwitchCompat
     private lateinit var item: ItemDao
     private lateinit var binding: ActivityMainBinding
     private lateinit var list: MutableList<Item>
     private lateinit var itemAdapter: ItemAdapter
     var isAdminMode: Boolean = false
+
+    // Fonction appelée lors de la création du Activity.
+    // Il initialise , configure l'interface utilisateur
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,12 +58,15 @@ class MainActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
+
+        //Navigation entre les fragments
         val appBarConfiguration = AppBarConfiguration(
             setOf(R.id.navigation_panier, R.id.navigation_dashboard)
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+        //Fonction qui définit l'activité du bouton ajouter un produit en mode administrateur
         btnPlusAdmin.setOnClickListener { view ->
             val dialogView = layoutInflater.inflate(R.layout.dialog_add_item, null)
 
@@ -92,6 +100,8 @@ class MainActivity : AppCompatActivity() {
             dialog.show()
         }
 
+        // Listerner du bouton switch qui bascule entre le mode administrateur et le mode utilisateur.
+        // Lorsque le commutateur est modifié, 'isAdmin
         btnSwitch.setOnCheckedChangeListener { _, isChecked ->
             isAdminMode = isChecked
             val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
@@ -109,10 +119,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //Fonction pour donner de la visibilité au bouton qui ajoute un produit
     fun showFab() {
         binding.fab.visibility = View.VISIBLE
     }
 
+    //Fonction pour cacher le bouton qui ajoute un produit
     fun hideFab() {
         binding.fab.visibility = View.GONE
     }

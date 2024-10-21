@@ -4,6 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.tp2_14d_mobiles.model.Item
 @Dao
+
+// Interface qui définit les opérations d'accès aux données pour l'entité Item, contient
+// des méthodes pour insérer, mettre à jour, supprimer et interroger des éléments dans la table "items".
 interface ItemDao {
 
     @Insert

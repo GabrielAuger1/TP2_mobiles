@@ -7,13 +7,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.tp2_14d_mobiles.model.Item
 import com.example.tp2_14d_mobiles.databinding.ItemRowBinding
 
+//Fonctions appelées en mode administrateur
 interface OnItemClickListenerInterface {
     fun onItemClick(itemView: View?, position: Int)
     fun onClickEdit(itemView: View, position: Int)
     fun onClickDelete(position: Int)
 }
 
-
+// Adapter pour le RecyclerView qui gère l'affichage des éléments de la liste.
+// Permet de basculer entre les modes administrateur et utilisateur et gère la sélection des éléments.
 class ItemAdapter(
     private var items: List<Item>,
     private var isAdminMode: Boolean
@@ -108,32 +110,42 @@ class ItemAdapter(
 
     }
 
+    // Fonction pour créer et renvoier une nouvelle instance de ViewHolder,
+    // affiche la disposition des éléments de liste
+    // permet l'accès pendant le processus de liaison.
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
+    // Méthode appelée par RecyclerView pour afficher les données à la position spécifiée
+    // et pour la mise à jour de l'interface utilisateur.
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(items[position])
     }
 
     override fun getItemCount(): Int = items.size
 
+    //// Mis à jour de la liste des éléments affichés par l'adaptateur.
     fun setItems(items: List<Item>) {
         this.items = items
         notifyDataSetChanged()
     }
+
+    // Renvoie le nombre total d'éléments sélectionnés
     fun getSelectedItemCount(): Int {
         return selectedItems.sumOf { itemId ->
             itemQuantities[itemId] ?: 1
         }
     }
+
+    // Renvoie la liste de paires contenant les éléments sélectionnés et leurs quantités respectives.
     fun getSelectedItemsWithQuantities(): List<Pair<Item, Int>> {
         return items.filter { selectedItems.contains(it.id) }
             .map { item -> item to (itemQuantities[item.id] ?: 1) }
     }
-    //Définit le mode Administrateur à l’aide du bouton switch
 
+    //Définit le mode Administrateur à l’aide du bouton switch
     fun setAdminMode(isAdminMode: Boolean) {
         this.isAdminMode = isAdminMode
         notifyDataSetChanged()

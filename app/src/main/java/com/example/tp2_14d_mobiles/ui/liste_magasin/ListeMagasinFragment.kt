@@ -23,6 +23,7 @@ import kotlin.concurrent.thread
 
 class ListeMagasinFragment : Fragment() {
 
+    //Déclaration des variables
     private var itemAdapter: ItemAdapter? = null
     private var mItems: MutableList<Item> = ArrayList<Item>(0)
     private var _binding: FragmentListeMagasinBinding? = null
@@ -31,6 +32,8 @@ class ListeMagasinFragment : Fragment() {
     private lateinit var liste: ListeMagasinViewModel
     private lateinit var listeViewModel: ListeMagasinViewModel
 
+    //Function pour créer et afficher  le layout du fragment
+    // lorsqu'il est affiché dans l'interface utilisateur.
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,6 +50,9 @@ class ListeMagasinFragment : Fragment() {
         return root
     }
 
+
+    // Fonction appelée juste après la création du fragment ListeMagasin.
+    // Initialise des composants et configure des comportements d'interface supplémentaires
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView: RecyclerView = binding!!.recyclerView
@@ -70,6 +76,7 @@ class ListeMagasinFragment : Fragment() {
 
         }
 
+        //Ajout d'éléments à la base de données
         val itemDao: ItemDao = ItemDatabase.getDatabase(requireContext()).itemDao()
         thread { itemDao?.deleteAllItems() }.join()
         var item: Item? = Item(1, "Item 1", "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.", 10.0, "Categorie 1")
@@ -85,6 +92,7 @@ class ListeMagasinFragment : Fragment() {
 
         itemAdapter?.setItems(mItems)
 
+       //Détermination de l'affichage des éléments à côté de l'adaptateur
         itemAdapter?.setOnItemClickListener(object : OnItemClickListenerInterface {
             override fun onItemClick(itemView: View?, position: Int) {
                 val item = mItems[position]
@@ -147,6 +155,7 @@ class ListeMagasinFragment : Fragment() {
         })
 
     }
+    //Fonction qui permet d'ajouter un item au panier
     fun addToCart(selectedItems: List<Pair<Item, Int>>) {
 
         for ((item, quantity) in selectedItems) {
@@ -156,6 +165,10 @@ class ListeMagasinFragment : Fragment() {
 
 
     }
+
+    //Fonction appelée lorsque le fragment revient au premier plan,
+    // vérifie si l'activité principale est en mode admin (isAdminMode).
+
     override fun onResume() {
         super.onResume()
 
@@ -167,6 +180,8 @@ class ListeMagasinFragment : Fragment() {
         }
     }
 
+    //Fonction appelée lorsque la vue du fragment est détruite
+    // pour assurer que la référence à _binding est définie sur null
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
